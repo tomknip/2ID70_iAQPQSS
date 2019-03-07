@@ -4,18 +4,15 @@ ALTER TABLE Students add primary key (studentid);
 CREATE UNLOGGED TABLE StudentRegistrationsToDegrees(StudentRegistrationId int, StudentId int, DegreeId int, RegistrationYear smallint);
 COPY StudentRegistrationsToDegrees(StudentRegistrationId, StudentId, DegreeId, RegistrationYear) FROM '/mnt/ramdisk/tables/StudentRegistrationsToDegrees.table' DELIMITER ',' CSV HEADER;
 ALTER TABLE StudentRegistrationsToDegrees add primary key (StudentRegistrationId);
-CREATE UNLOGGED TABLE Degrees(DegreeId int, Dept varchar(50), DegreeDescription varchar(200), TotalECTS smallint);
 CREATE UNLOGGED TABLE Courses(CourseId int, CourseName varchar(50), CourseDescription varchar(200), DegreeId int, ECTS smallint);
 COPY Courses(CourseId, CourseName, CourseDescription,  DegreeId, ECTS) FROM '/mnt/ramdisk/tables/Courses.table' DELIMITER ',' CSV HEADER;
 ALTER TABLE Courses add primary key (CourseId);
 CREATE UNLOGGED TABLE CourseOffers(CourseOfferId int, CourseId int, year smallint, Quartile smallint);
 COPY CourseOffers_temp(CourseOfferId, CourseId, year,  Quartile) FROM '/mnt/ramdisk/tables/CourseOffers.table' DELIMITER ',' CSV HEADER;
 ALTER TABLE CourseOffers add primary key (CourseOfferId);
-
-
 CREATE UNLOGGED TABLE CourseRegistrations_temp(CourseOfferId int, StudentRegistrationId int, Grade smallint);
 COPY CourseRegistrations_temp(CourseOfferId, StudentRegistrationId, Grade) FROM '/mnt/ramdisk/tables/CourseRegistrations.table' DELIMITER ',' CSV HEADER NULL 'null';
-
+CREATE UNLOGGED TABLE Degrees(DegreeId int, Dept varchar(50), DegreeDescription varchar(200), TotalECTS smallint);
 COPY Degrees(DegreeId, Dept, DegreeDescription, TotalECTS) FROM '/mnt/ramdisk/tables/Degrees.table' DELIMITER ',' CSV HEADER;
 ALTER TABLE Degrees add primary key (DegreeId);
 CREATE UNLOGGED TABLE Teachers(TeacherId int, TeacherName varchar(50), Address varchar(200), BirthyearTeacher smallint, Gender char);
