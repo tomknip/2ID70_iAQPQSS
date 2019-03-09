@@ -9,7 +9,7 @@ COPY Courses(CourseId, CourseName, CourseDescription,  DegreeId, ECTS) FROM '/mn
 ALTER TABLE Courses add primary key (CourseId);
 CREATE UNLOGGED TABLE CourseOffers_temp(CourseOfferId int, CourseId int, year smallint, Quartile smallint);
 COPY CourseOffers_temp(CourseOfferId, CourseId, year,  Quartile) FROM '/mnt/ramdisk/tables/CourseOffers.table' DELIMITER ',' CSV HEADER;
-SELECT CO.*, courses.CourseName INTO CourseOffers FROM CourseOffers_temp CO, Courses WHERE Courses.CourseId = CO.CourseID; 
+SELECT CO.*, courses.CourseName, courses.ECTS INTO CourseOffers FROM CourseOffers_temp CO, Courses WHERE Courses.CourseId = CO.CourseID; 
 ALTER TABLE CourseOffers add primary key (CourseOfferId);
 DROP TABLE CourseOffers_temp;
 CREATE UNLOGGED TABLE CourseRegistrations_temp(CourseOfferId int, StudentRegistrationId int, Grade smallint);
