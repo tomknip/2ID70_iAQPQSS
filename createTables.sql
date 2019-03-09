@@ -14,7 +14,7 @@ ALTER TABLE CourseOffers add primary key (CourseOfferId);
 DROP TABLE CourseOffers_temp;
 CREATE UNLOGGED TABLE CourseRegistrations_temp(CourseOfferId int, StudentRegistrationId int, Grade smallint);
 COPY CourseRegistrations_temp(CourseOfferId, StudentRegistrationId, Grade) FROM '/mnt/ramdisk/tables/CourseRegistrations.table' DELIMITER ',' CSV HEADER NULL 'null';
-select courseregistrations_temp.*, studentregistrationstodegrees.studentid, courseoffers.courseid into CourseRegistrations from courseregistrations_temp, studentregistrationstodegrees, courseoffers where courseregistrations_temp.studentregistrationid = studentregistrationstodegrees.studentregistrationid and courseregistrations_temp.courseofferid = courseoffers.courseofferid;
+select courseregistrations_temp.*, studentregistrationstodegrees.studentid, studentregistrationtodegrees.degreeId, courseoffers.courseid into CourseRegistrations from courseregistrations_temp, studentregistrationstodegrees, courseoffers where courseregistrations_temp.studentregistrationid = studentregistrationstodegrees.studentregistrationid and courseregistrations_temp.courseofferid = courseoffers.courseofferid;
 DROP TABLE CourseRegistrations_temp;
 CREATE UNLOGGED TABLE Degrees(DegreeId int, Dept varchar(50), DegreeDescription varchar(200), TotalECTS smallint);
 COPY Degrees(DegreeId, Dept, DegreeDescription, TotalECTS) FROM '/mnt/ramdisk/tables/Degrees.table' DELIMITER ',' CSV HEADER;
